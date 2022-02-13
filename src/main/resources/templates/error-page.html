@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <title>Error Page</title>
+</head>
+<body>
+<div align="center">
+    <h1>Error Page</h1>
+    <br/><br/>
+    <p th:text="${message}">Message</p>
+    <br>
+    <a th:href="@{'/'}">Return to Customer List</a>
+</div>
+</body>
+</html>
