@@ -21,6 +21,6 @@ public class Book {
 
     private String isbn;
 
-    @OneToOne
+    @ManyToOne
     private Customer customer;
 }

@@ -29,7 +29,7 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     @Transactional
     public Customer saveCustomer(Customer customer) throws DuplicateCustomerException {
-        if (customerRepository.findDistinctByEmailAddress(customer) != null) {
+        if (customerRepository.findDistinctByEmailAddress(customer.getEmailAddress()) != null) {
             throw new DuplicateCustomerException("This customer already exists in the system.");
         } else {
             return customerRepository.save(customer);
@@ -72,7 +72,7 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public void checkoutBook(Book book, Long customerId) {
         Customer customer = customerRepository.findById(customerId).get();
-        customer.getBooks().add(book);
+        customer.addBook(book);
         customerRepository.save(customer);
     }
 

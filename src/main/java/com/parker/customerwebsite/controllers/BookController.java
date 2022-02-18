@@ -34,7 +34,7 @@ public class BookController {
         return "new-book";
     }
 
-    @PostMapping("/books/save")
+    @RequestMapping("/books/save")
     public String saveBook(Model model, @ModelAttribute("book") Book book) {
         try {
             bookService.saveBook(book);
@@ -45,7 +45,7 @@ public class BookController {
         }
     }
 
-    @GetMapping("/books/available")
+    @RequestMapping("/books/available")
     public String viewAvailableBooks(Model model) {
         try {
             final List<Book> availableBooksList = bookService.getAvailableBooks();
@@ -57,7 +57,7 @@ public class BookController {
         }
     }
 
-    @PostMapping("/books/update/{id}")
+    @RequestMapping("/books/update/{id}")
     public String updateBook(@PathVariable(name = "id") Long id,
                                  @ModelAttribute("book") Book book, Model model) {
         if (!id.equals(book.getId())) {
@@ -68,10 +68,9 @@ public class BookController {
         }
         bookService.updateBook(book);
         return "redirect:/books";
-
     }
 
-    @PostMapping("/books/delete/{id}")
+    @RequestMapping("/books/delete/{id}")
     public String deleteBook(Model model, @PathVariable(name = "id") Long id) {
         try {
             bookService.deleteBook(id);
@@ -82,7 +81,7 @@ public class BookController {
         }
     }
 
-    @GetMapping("/books/edit/{id}")
+    @RequestMapping("/books/edit/{id}")
     public String showEditBookPage(Model model, @PathVariable(name = "id") Long id) {
         try {
             Book book = bookService.getBookByBookId(id);

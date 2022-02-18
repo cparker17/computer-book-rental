@@ -3,6 +3,7 @@ package com.parker.customerwebsite.model;
 import lombok.*;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -20,6 +21,7 @@ public class Customer {
     @NotNull(message = "Customer name required.")
     private String fullName;
 
+    @Column(unique = true)
     private String emailAddress;
 
     private Integer age;
@@ -27,6 +29,13 @@ public class Customer {
     @NotNull(message = "Customer address required.")
     private String address;
 
-    @OneToMany
+    @OneToMany(mappedBy = "customer")
     private List<Book> books;
+
+    public void addBook(Book book) {
+        if (books.isEmpty()) {
+            books = new ArrayList<>();
+        }
+        books.add(book);
+    }
 }
