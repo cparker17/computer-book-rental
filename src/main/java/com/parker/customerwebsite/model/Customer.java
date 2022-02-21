@@ -15,19 +15,25 @@ import java.util.List;
 @Setter
 public class Customer {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull(message = "Customer name required.")
-    private String fullName;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "customer_details_id")
+    private CustomerDetails customerDetails;
+
+    @NotNull(message = "First name required.")
+    private String firstName;
+
+    @NotNull(message = "Last name required.")
+    private String lastName;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "address_id")
+    private Address address;
 
     @Column(unique = true)
     private String emailAddress;
-
-    private Integer age;
-
-    @NotNull(message = "Customer address required.")
-    private String address;
 
     @OneToMany(mappedBy = "customer")
     private List<Book> books;

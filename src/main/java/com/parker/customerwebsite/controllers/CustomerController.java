@@ -11,6 +11,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.security.Principal;
 import java.util.List;
 
 @Controller
@@ -24,10 +26,33 @@ public class CustomerController {
     }
 
     @GetMapping("/")
-    public String vewHomePage(Model model) {
+    public String viewHomePage(Principal principal) {
+        return "index";
+    }
+
+    @GetMapping("/register-form")
+    public String viewRegisterAccountPage(Model model) {
+        model.addAttribute(new Customer());
+        return "register";
+    }
+
+    @PostMapping("/register")
+    public String registerAccount(@ModelAttribute("customer") Customer customer, Model model) {
+        try {
+            customerService.registerAccount(customer);
+            return "register-success";
+        } catch (DuplicateCustomerException e) {
+            model.addAttribute("message", e.getMessage());
+            return "error-page";
+        }
+
+    }
+
+    @GetMapping("/customer-list")
+    public String viewCustomerList(Model model) {
         List<Customer> customerList = customerService.getAllCustomers();
         model.addAttribute("customerList", customerList);
-        return "index";
+        return "customer-list";
     }
 
     @GetMapping("/new")
@@ -35,17 +60,6 @@ public class CustomerController {
         Customer customer = new Customer();
         model.addAttribute("customer", customer);
         return "new-customer";
-    }
-
-    @PostMapping(value = "/save")
-    public String saveCustomer(Model model, @ModelAttribute("customer") Customer customer) {
-        try {
-            customerService.saveCustomer(customer);
-            return "redirect:/";
-        } catch (DuplicateCustomerException e) {
-            model.addAttribute("message", e.getMessage());
-            return "error-page";
-        }
     }
 
     @GetMapping("/edit/{id}")
