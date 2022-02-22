@@ -1,4 +1,4 @@
-package com.parker.customerwebsite.security;
+package com.parker.customerwebsite.configurations;
 
 import com.parker.customerwebsite.services.CustomerDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,16 +20,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers(HttpMethod.GET, "/", "/webjars/**", "/css/**",
+                    .antMatchers(HttpMethod.GET, "/", "/webjars/**", "/css/**",
                         "/login/**", "/images/**", "/register-form").permitAll()
-                .antMatchers(HttpMethod.POST, "/register").permitAll()
-                .antMatchers(HttpMethod.GET, "/customer-view", "/books")
-                .hasAnyRole("USER", "ADMIN")
-                //all other requests should be authenticated
-                .anyRequest().authenticated()
-                .and()
+                    .antMatchers(HttpMethod.POST, "/register").permitAll()
+                    .antMatchers(HttpMethod.GET, "/customer-view", "/books")
+                    .hasAnyRole("USER", "ADMIN")
+                    .anyRequest().authenticated()
+                    .and()
                 .formLogin()
-                .permitAll()
+                    .permitAll()
                 .defaultSuccessUrl("/");
     }
 

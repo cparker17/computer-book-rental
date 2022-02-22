@@ -47,7 +47,7 @@ public class CustomerServiceImpl implements CustomerService {
         if (customerRepository.findDistinctByEmailAddress(customer.getEmailAddress()) != null) {
             throw new DuplicateCustomerException("This customer already exists in the system.");
         } else {
-            Role role = roleRepository.findById(2L).get();
+            Role role = roleRepository.findRoleByRole("ROLE_USER");
             customer.getCustomerDetails().setRole(role);
             customer.getCustomerDetails().setPassword(passwordEncoder
                     .encode(customer.getCustomerDetails().getPassword()));
