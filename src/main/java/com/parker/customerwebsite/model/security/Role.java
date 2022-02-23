@@ -1,4 +1,4 @@
-package com.parker.customerwebsite.model;
+package com.parker.customerwebsite.model.security;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;

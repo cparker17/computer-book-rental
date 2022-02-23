@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <html lang="en">
 <head>
     <meta charset="utf-8"/>
@@ -14,8 +14,14 @@
     <h1 class="text-center display-3">County Public Library System</h1>
     <p class="fs-4 text-center">Welcome to the county public library system.</p>
     <div class="text-center">
-        <a href="#" th:href="@{/register-form}" class="btn bg-primary btn-lg">Register</a>
-        <a href="#" th:href="@{/login}"class="btn bg-primary btn-lg">Sign In</a>
+        <div sec:authorize="isAuthenticated()">
+            <a href="#" th:href="@{/register}" class="btn bg-primary btn-lg">Register</a>
+            <a href="#" th:href="@{/sign-in}" class="btn bg-primary btn-lg">Sign In</a>
+        </div>
+        <div sec:authorize="!isAuthenticated()">
+            <a href="#" th:href="@{/register}" class="btn bg-primary btn-lg">Register</a>
+            <a href="#" th:href="@{/logout}" class="btn bg-primary btn-lg">Log Out</a>
+        </div>
     </div>
     </body>
 </div>

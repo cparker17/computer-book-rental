@@ -1,6 +1,5 @@
 package com.parker.customerwebsite.controllers;
 
-import com.parker.customerwebsite.exceptions.DuplicateCustomerException;
 import com.parker.customerwebsite.exceptions.NoSuchBookException;
 import com.parker.customerwebsite.exceptions.NoSuchCustomerException;
 import com.parker.customerwebsite.model.Book;
@@ -12,7 +11,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.security.Principal;
 import java.util.List;
 
 @Controller
@@ -23,43 +21,6 @@ public class CustomerController {
     public CustomerController(CustomerService customerService, BookService bookService) {
         this.customerService = customerService;
         this.bookService = bookService;
-    }
-
-    @GetMapping("/")
-    public String viewHomePage(Principal principal) {
-        return "index";
-    }
-
-    @GetMapping("/register-form")
-    public String viewRegisterAccountPage(Model model) {
-        model.addAttribute(new Customer());
-        return "register";
-    }
-
-    @PostMapping("/register")
-    public String registerAccount(@ModelAttribute("customer") Customer customer, Model model) {
-        try {
-            customerService.registerAccount(customer);
-            return "register-success";
-        } catch (DuplicateCustomerException e) {
-            model.addAttribute("message", e.getMessage());
-            return "error-page";
-        }
-
-    }
-
-    @GetMapping("/customer-list")
-    public String viewCustomerList(Model model) {
-        List<Customer> customerList = customerService.getAllCustomers();
-        model.addAttribute("customerList", customerList);
-        return "customer-list";
-    }
-
-    @GetMapping("/new")
-    public String showNewCustomerPage(Model model) {
-        Customer customer = new Customer();
-        model.addAttribute("customer", customer);
-        return "new-customer";
     }
 
     @GetMapping("/edit/{id}")
@@ -96,6 +57,13 @@ public class CustomerController {
         } catch (NoSuchCustomerException e) {
             return e.getMessage();
         }
+    }
+
+    @GetMapping("/customer-list")
+    public String viewCustomerList(Model model) {
+        List<Customer> customerList = customerService.getAllCustomers();
+        model.addAttribute("customerList", customerList);
+        return "customer-list";
     }
 
     @RequestMapping("/checkout-book/{id}")

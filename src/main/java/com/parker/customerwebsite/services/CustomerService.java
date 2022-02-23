@@ -5,9 +5,11 @@ import com.parker.customerwebsite.exceptions.NoSuchCustomerException;
 import com.parker.customerwebsite.model.Book;
 import com.parker.customerwebsite.model.Customer;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public interface CustomerService {
     List<Customer> getAllCustomers();
     Customer registerAccount(Customer customer) throws DuplicateCustomerException;

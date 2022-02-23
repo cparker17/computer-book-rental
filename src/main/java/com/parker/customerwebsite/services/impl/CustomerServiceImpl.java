@@ -4,15 +4,13 @@ import com.parker.customerwebsite.exceptions.DuplicateCustomerException;
 import com.parker.customerwebsite.exceptions.NoSuchCustomerException;
 import com.parker.customerwebsite.model.Book;
 import com.parker.customerwebsite.model.Customer;
-import com.parker.customerwebsite.model.Role;
+import com.parker.customerwebsite.model.security.Role;
 import com.parker.customerwebsite.repositories.CustomerRepository;
 import com.parker.customerwebsite.repositories.RoleRepository;
-import com.parker.customerwebsite.services.CustomerDetailsService;
+import com.parker.customerwebsite.services.SecurityUserService;
 import com.parker.customerwebsite.services.CustomerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,7 +26,7 @@ public class CustomerServiceImpl implements CustomerService {
     final CustomerRepository customerRepository;
 
     @Autowired
-    CustomerDetailsService customerDetailsService;
+    SecurityUserService securityUserService;
 
     @Autowired
     RoleRepository roleRepository;
@@ -44,13 +42,13 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     @Transactional
     public Customer registerAccount(Customer customer) throws DuplicateCustomerException {
-        if (customerRepository.findDistinctByEmailAddress(customer.getEmailAddress()) != null) {
+        if (customerRepository.findDistinctByEmail(customer.getEmail()) != null) {
             throw new DuplicateCustomerException("This customer already exists in the system.");
         } else {
-            Role role = roleRepository.findRoleByRole("ROLE_USER");
-            customer.getCustomerDetails().setRole(role);
-            customer.getCustomerDetails().setPassword(passwordEncoder
-                    .encode(customer.getCustomerDetails().getPassword()));
+            Role role = roleRepository.findRoleById(1L);
+            customer.getUser().setRole(role);
+            customer.getUser().setPassword(passwordEncoder
+                    .encode(customer.getUser().getPassword()));
             return customerRepository.save(customer);
         }
     }

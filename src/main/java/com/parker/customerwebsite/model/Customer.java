@@ -1,5 +1,7 @@
 package com.parker.customerwebsite.model;
 
+import com.parker.customerwebsite.model.security.SecurityUser;
+import com.parker.customerwebsite.model.security.User;
 import lombok.*;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -15,12 +17,12 @@ import java.util.List;
 @Setter
 public class Customer {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "customer_details_id")
-    private CustomerDetails customerDetails;
+    @JoinColumn(name = "customer_user_id")
+    private User user;
 
     @NotNull(message = "First name required.")
     private String firstName;
@@ -29,11 +31,11 @@ public class Customer {
     private String lastName;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "address_id")
+    @JoinColumn(name = "customer_address_id")
     private Address address;
 
     @Column(unique = true)
-    private String emailAddress;
+    private String email;
 
     @OneToMany(mappedBy = "customer")
     private List<Book> books;
