@@ -9,12 +9,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
+<div th:replace="fragments :: navigation"/><br><br>
 <div align="center">
-    <h1 class="text-display4">Error Page</h1>
+    <h4 class="text-display4">Error</h4>
     <br/><br/>
     <p th:text="${message}">Message</p>
     <br>
-    <a th:href="@{'/'}" class="btn btn-primary">Return to Home Page</a>
+    <a th:href="@{'/'}" class="btn btn-light text-dark border-dark">Return to Home Page</a>
 </div>
 </body>
 </html>

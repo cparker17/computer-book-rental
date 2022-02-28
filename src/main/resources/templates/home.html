@@ -9,20 +9,27 @@
           crossorigin="anonymous">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
-<div class="container">
-    <body>
-    <h1 class="text-center display-3">County Public Library System</h1>
-    <p class="fs-4 text-center">Welcome to the county public library system.</p>
-    <div class="text-center">
-        <div sec:authorize="isAuthenticated()">
-            <a href="#" th:href="@{/register}" class="btn bg-primary btn-lg">Register</a>
-            <a href="#" th:href="@{/sign-in}" class="btn bg-primary btn-lg">Sign In</a>
-        </div>
-        <div sec:authorize="!isAuthenticated()">
-            <a href="#" th:href="@{/register}" class="btn bg-primary btn-lg">Register</a>
-            <a href="#" th:href="@{/logout}" class="btn bg-primary btn-lg">Log Out</a>
-        </div>
+<body>
+<div th:replace="fragments :: navigation"/>
+<h1 class="text-center display-4"><br>Computer Book Rentals<br><br></h1>
+<div class="container-md border border-3 border-dark bg-light rounded">
+    <div style="display:flex; justify-content:center" class="fs-3">
+        <p><br>Latest Arrival</p>
     </div>
-    </body>
+    <center><img src="cover-images/IMG_0152.JPG"
+                 width="200" height="300" class="center rounded"/></center>
+    <br><br><br>
 </div>
+<p class="fs-4 text-center"><br>Welcome to the premier computer book rental store!</p>
+<p class="fs-4 text-center"> Register your account today!</p>
+<div style="display:flex; justify-content:center">
+    <a href="#" th:href="@{/register}" class="btn bg-dark text-light text-center">Register</a>
+</div>
+<div style="display:flex; justify-content:center" class="text-primary">
+    <p><br><br><br><br>Contact Us:</p>
+</div>
+<div style="display:flex; justify-content:center" class="text-primary">
+    Email: info@computerbookrentals.com</p>
+</div>
+</body>
 </html>

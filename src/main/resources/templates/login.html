@@ -11,25 +11,28 @@
           crossorigin="anonymous">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
-<div class="container justify-content-center">
-    <h1>Please sign in</h1>
-    <div class="mb-3 col-5">
+<body>
+<div th:replace="fragments :: navigation"/><br><br>
+<center><h3>Please sign in</h3><br>
+    <div class="mb-3 col-3">
         <div th:if="${param.error}">
-            Invalid username and password.</div>
+            Invalid username and password.
+        </div>
         <div th:if="${param.logout}">
-            You have been logged out.</div>
+            You have been logged out.
+        </div>
         <form th:action="@{/login}" method="post">
-            <div>
+            <div class="text-align:center">
                 <input type="text" name="username" class="form-control m-2" placeholder="Username"/>
             </div>
             <div>
                 <input type="password" name="password" class="form-control m-2" placeholder="Password"/>
-            </div>
-            <input type="submit" class="btn bg-primary btn-lg" value="Sign in" />
+            </div><br>
+            <input type="submit" class="btn bg-light text-dark border-dark" value="Sign in"/>
         </form>
     </div>
-    </body>
-</div>
+</center>
+</body>
 </html>
 
 

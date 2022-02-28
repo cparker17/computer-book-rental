@@ -29,6 +29,9 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation group: 'org.thymeleaf.extras', name: 'thymeleaf-extras-springsecurity5', version: '3.0.4.RELEASE'
+    implementation group: 'org.apache.poi', name: 'poi', version: '5.2.0'
+    implementation group: 'org.apache.poi', name: 'poi-ooxml', version: '5.2.0'
+    compileOnly("org.springframework.boot:spring-boot-devtools")
 }
 
 tasks.named('test') {

@@ -9,12 +9,14 @@
           crossorigin="anonymous">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
+<body>
+<div th:replace="fragments :: navigation"/>
+<br><br>
 <div class="container">
-    <body>
-    <h1 class="text-center display-4">Registration completed successfully</h1>
+    <h4 class="text-center">Registration completed successfully</h4><br>
     <div class="text-center">
-        <a href="#" th:href="@{'/'}" class="btn bg-primary btn-lg">Return to Homepage</a>
+        <a href="#" th:href="@{'/login'}" class="btn bg-light text-dark border-dark">Sign In</a>
     </div>
-    </body>
 </div>
+</body>
 </html>

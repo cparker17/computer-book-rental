@@ -9,9 +9,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
+<div th:replace="fragments :: navigation"/><br>
 <div align="center">
-    <h1>Create New Book</h1>
-    <br />
+    <h3>Enter New Book Information</h3>
+    <br>
     <form action="#" th:action="@{/books/save}" th:object="${book}" method="post">
         <table border="0" cellpadding="10">
             <tr>
@@ -27,7 +28,7 @@
                 <td><input type="text" th:field="*{isbn}" required/></td>
             </tr>
             <tr>
-                <td colspan="2"><button type="submit" class="btn btn-primary">Save</button> </td>
+                <td colspan="2"><button type="submit" class="btn btn-light text-dark border-dark">Save</button> </td>
             </tr>
         </table>
     </form>
