@@ -1,5 +1,6 @@
 package com.parker.computerbookrental.controllers;
 
+import com.parker.computerbookrental.exceptions.NoSuchUserException;
 import com.parker.computerbookrental.model.User;
 import com.parker.computerbookrental.model.UserFactory;
 import com.parker.computerbookrental.services.BookService;
@@ -36,8 +37,9 @@ public class ApplicationController {
     }
 
     @GetMapping("/dashboard")
-    public String viewDashboard(Model model, Authentication auth) {
+    public String viewDashboard(Model model, Authentication auth) throws NoSuchUserException {
         User user = UserFactory.createUser(auth);
+        user = userService.getUser(user.getId());
         model.addAttribute("user", user);
         switch (user.getRole().getRole()) {
             case ROLE_USER:

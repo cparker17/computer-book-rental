@@ -1,11 +1,7 @@
 package com.parker.computerbookrental.model;
 
-import com.parker.computerbookrental.model.Address;
-import com.parker.computerbookrental.model.Book;
 import com.parker.computerbookrental.model.security.Role;
 import lombok.*;
-import org.springframework.transaction.annotation.Transactional;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
@@ -19,7 +15,7 @@ import java.util.List;
 @Builder
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotNull
@@ -46,6 +42,7 @@ public class User {
     private List<Book> books;
 
     @OneToMany
+    @JoinColumn(name = "user_id")
     private List<RentalHistory> rentalHistoryList;
 
     public void addBook(Book book) {

@@ -6,10 +6,7 @@ import com.parker.computerbookrental.model.Book;
 import com.parker.computerbookrental.model.RentalHistory;
 import com.parker.computerbookrental.model.security.Role;
 import com.parker.computerbookrental.model.User;
-import com.parker.computerbookrental.repositories.BookRepository;
-import com.parker.computerbookrental.repositories.RentalHistoryRepository;
-import com.parker.computerbookrental.repositories.RoleRepository;
-import com.parker.computerbookrental.repositories.UserRepository;
+import com.parker.computerbookrental.repositories.*;
 import com.parker.computerbookrental.services.SecurityUserService;
 import com.parker.computerbookrental.services.UserService;
 import lombok.RequiredArgsConstructor;
@@ -44,6 +41,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     RentalHistoryRepository rentalHistoryRepository;
+
+    @Autowired
+    AddressRepository addressRepository;
 
     @Override
     public List<User> getAllUsers() {
@@ -91,6 +91,7 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public void returnBook(Long id, User user) {
+        user = userRepository.getById(user.getId());
         List<Book> books = new ArrayList<>();
         for (Book book : user.getBooks()) {
             if (book.getId() != id) {
@@ -121,8 +122,19 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User updateUser(User user) {
-        return userRepository.save(user);
+    @Transactional
+    public User updateUser(User updatedUser) {
+        User user = userRepository.getById(updatedUser.getId());
+        updatedUser.setUsername(user.getUsername());
+        updatedUser.setPassword(user.getPassword());
+        updatedUser.setRole(user.getRole());
+        resetAddresses(user);
+        return userRepository.save(updatedUser);
+    }
+
+    private void resetAddresses(User user) {
+        Long addressId = user.getAddress().getId();
+        addressRepository.deleteById(addressId);
     }
 
     @Override

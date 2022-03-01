@@ -11,7 +11,7 @@
 <body>
 <div th:replace="fragments :: navigation"/>
 <div class="container"><br><br>
-    <center><h2>Customer List</h2>
+    <center><h2>Customer List</h2></center>
         <br>
         <table class="table table-striped border border-dark">
             <thead>
@@ -54,11 +54,8 @@
                         <a href="#" th:unless="${user.rentalHistoryList.isEmpty()}"
                            class="btn btn-sm btn-light text-dark border-dark"
                            style="margin: 2px"
-                           th:href="@{'/user/rental-history/' + ${user.id}}">View History
+                           th:href="@{'/user/rental-history/' + ${user.id}}">History
                         </a>
-                    <td><a th:href="@{'/user/rental-history/' + ${user.id}}"
-                           class="btn btn-dark text-dark bg-light btn-sm">View History</a></td>
-                    </td>
                 </tr>
             </div>
             </tbody>

@@ -41,6 +41,7 @@ public class Book {
     private User user;
 
     @OneToMany
+    @JoinColumn(name = "book_id")
     private List<BookHistory> bookHistoryList;
 
     public void addRentalHistory(BookHistory rentalHistory) {
