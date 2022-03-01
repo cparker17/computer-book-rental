@@ -28,38 +28,31 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable()
                 .authorizeRequests()
 
-                //ApplicationController end points
-                .mvcMatchers(HttpMethod.GET, "/", "/webjars/**", "/css/**",
-                        "/login/**", "/images/**", "/register").permitAll()
-                .mvcMatchers("/user-list").hasRole("ADMIN")
+                .mvcMatchers( "/update", "/checkout-book/{id}",
+                        "/return-book/{id}", "/dashboard", "/books/checkout/{bookId}",
+                        "/books/return/{bookId}/{userId}").authenticated()
 
-                //SecurityUserController end points
+                .mvcMatchers("/delete{id}", "/user-list", "/user-list", "/books/new", "/books/save",
+                        "/books/update/{id}", "/books/delete/{id}", "/books/edit/{id}", "/delete/{id}", "/user-list",
+                        "/user-books/{id}", "/user/rental-history/{id}", "/books/rental-history/{id}").hasRole("ADMIN")
+
+                .mvcMatchers(HttpMethod.POST, "/update/{id}").hasRole("ADMIN")
+
+                .mvcMatchers(HttpMethod.GET, "/", "/webjars/**", "/css/**",
+                        "/login/**", "/images/**", "/register", "/books", "/books/available",
+                        "/books/cover-image/{bookId}", "books/new-arrivals", "/books/search").permitAll()
+
                 .mvcMatchers(HttpMethod.POST, "/register", "/register-form", "/sign-in",
                         "/login-error").permitAll()
 
-                //UserController end points
-                .mvcMatchers( "/update", "/checkout-book/{id}",
-                        "/return-book/{id}", "/dashboard").authenticated()
-                .mvcMatchers("/delete{id}", "/user-list").hasRole("ADMIN")
-
-                //BookController end points
-                .mvcMatchers( "/books/checkout/{bookId}",
-                        "/books/return/{bookId}/{userId}").authenticated()
-                .mvcMatchers("/books/new", "/books/save", "/books/update/{id}",
-                        "/books/delete/{id}", "/books/edit/{id}").hasRole("ADMIN")
-                .mvcMatchers("/books", "/books/available", "/books/cover-image/{bookId}",
-                        "books/new-arrivals", "/books/search").permitAll()
-
-                //AdminController
-                .mvcMatchers( "/delete/{id}", "/user-list", "/user-books/{id}",
-                        "/user/rental-history/{id}", "/books/rental-history/{id}").hasRole("ADMIN")
-                .mvcMatchers(HttpMethod.POST, "/update/{id}").hasRole("ADMIN")
-
                 .and()
+
                 .formLogin()
                     .loginPage("/login").permitAll()
                     .failureUrl("/login-error").permitAll()
+
                 .and()
+
                 .logout()
                     .logoutSuccessUrl("/");
     }

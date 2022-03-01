@@ -63,12 +63,12 @@ public class ComputerBookRentalApplication {
                         .firstName("admin")
                         .lastName("admin")
                         .address(Address.builder()
-                                .streetAddress("street")
-                                .city("city")
-                                .state("state")
-                                .zip("zip")
+                                .streetAddress("admin-street")
+                                .city("admin-city")
+                                .state("admin-state")
+                                .zip("admin-zip")
                                 .build())
-                        .email("email@email.com")
+                        .email("admin@email.com")
                         .role(roleRepository.findRoleById(2L))
                         .build();
                 userRepository.save(admin);
