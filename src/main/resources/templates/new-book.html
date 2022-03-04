@@ -17,15 +17,24 @@
         <table border="0" cellpadding="10">
             <tr>
                 <td>Title:</td>
-                <td><input type="text" th:field="*{title}" required/></td>
+                <td><input type="text" th:field="*{title}"/>
+                    <span class="validationError text-danger" th:if="${#fields.hasErrors('title')}"
+                          th:errors="*{title}">Title Error</span>
+                </td>
             </tr>
             <tr>
                 <td>Author:</td>
-                <td><input type="text" th:field="*{author}" required/></td>
+                <td><input type="text" th:field="*{author}"/>
+                    <span class="validationError text-danger" th:if="${#fields.hasErrors('author')}"
+                          th:errors="*{author}">Author Error</span>
+                </td>
             </tr>
             <tr>
                 <td>ISBN:</td>
-                <td><input type="text" th:field="*{isbn}" required/></td>
+                <td><input type="text" th:field="*{isbn}"/>
+                    <span class="validationError text-danger" th:if="${#fields.hasErrors('isbn')}"
+                          th:errors="*{isbn}">ISBN Error</span>
+                </td>
             </tr>
             <tr>
                 <td colspan="2"><button type="submit" class="btn btn-light text-dark border-dark">Save</button> </td>

@@ -15,7 +15,7 @@
     <h2 th:text="${book.title}" class="text-center">Book Title</h2>
     <br/><br/>
     <div class="container">
-        <center><img th:src="${book.imageFile}"
+        <center><img th:src="@{'/' + ${book.imageFile}}"
                      width="200" height="300" class="center rounded"/></center>
         <table class="table table-striped border border-dark">
             <thead>

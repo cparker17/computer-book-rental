@@ -1,5 +1,6 @@
 package com.parker.computerbookrental.controllers;
 
+import com.parker.computerbookrental.exceptions.NoSuchBookException;
 import com.parker.computerbookrental.exceptions.NoSuchUserException;
 import com.parker.computerbookrental.model.User;
 import com.parker.computerbookrental.model.UserFactory;
@@ -26,7 +27,8 @@ public class ApplicationController {
     BookService bookService;
 
     @GetMapping("/")
-    public String viewHomePage() {
+    public String viewHomePage(Model model) {
+        model.addAttribute("book", bookService.getLatestArrival());
         return "home";
     }
 
@@ -53,7 +55,13 @@ public class ApplicationController {
 
     @RequestMapping("/books/search")
     public String displaySearchResults(Model model, @RequestParam(value="searchText") String searchText) {
-        model.addAttribute("books", bookService.getSearchResults(searchText));
-        return "search-results";
+        try {
+            model.addAttribute("books", bookService.getSearchResults(searchText));
+            return "search-results";
+        } catch (NoSuchBookException e) {
+            model.addAttribute("message", e.getMessage());
+            return "error-page";
+        }
+
     }
 }

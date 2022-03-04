@@ -3,6 +3,7 @@ package com.parker.computerbookrental.model;
 import com.parker.computerbookrental.model.security.Role;
 import lombok.*;
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,16 +20,20 @@ public class User {
     private Long id;
 
     @NotNull
+    @NotBlank(message = "Username required.")
     @Column(unique = true)
     private String username;
 
     @NotNull
+    @NotBlank(message = "Password required.")
     private String password;
 
-    @NotNull(message = "First name required.")
+    @NotNull
+    @NotBlank(message = "First name required.")
     private String firstName;
 
-    @NotNull(message = "Last name required.")
+    @NotNull
+    @NotBlank(message = "Last name required.")
     private String lastName;
 
     @ManyToOne(cascade = CascadeType.ALL)
@@ -36,6 +41,7 @@ public class User {
     private Address address;
 
     @Column(unique = true)
+    @NotBlank(message = "Email required.")
     private String email;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
@@ -53,7 +59,6 @@ public class User {
     }
 
     @ManyToOne(cascade = CascadeType.MERGE)
-    @NotNull
     private Role role;
 
     @Column(nullable = false)

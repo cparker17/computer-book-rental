@@ -2,6 +2,7 @@ package com.parker.computerbookrental.model;
 
 import lombok.*;
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -20,17 +21,19 @@ public class Book {
     private Long id;
 
     @NotNull
+    @NotBlank(message = "Title required.")
     private String title;
 
     @NotNull
+    @NotBlank(message = "Author required.")
     private String author;
 
     @NotNull
+    @NotBlank(message = "ISBN required.")
     private String isbn;
 
     private String imageFile;
 
-    @NotNull
     private LocalDate dateAdded;
 
     private LocalDate dateRented;

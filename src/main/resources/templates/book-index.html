@@ -36,8 +36,8 @@
                 <td th:text="${book.isbn}">ISBN</td>
                 <td><a th:href="@{'/books/cover-image/' + ${book.id}}"
                        class="btn btn-sm btn-light text-dark border-dark ">View</a></td>
-                <div sec:authorize="hasRole('ROLE_USER')" th:if="${book.user == null}">
-                    <td><a th:href="@{'/books/checkout/' + ${book.id}}"
+                <div sec:authorize="hasRole('ROLE_USER')" >
+                    <td><a th:href="@{'/books/checkout/' + ${book.id}}" th:if="${book.user == null}"
                            class="btn btn-dark text-dark bg-light btn-sm">Rent</a></td>
                 </div>
                 <div sec:authorize="hasRole('ROLE_ADMIN')">

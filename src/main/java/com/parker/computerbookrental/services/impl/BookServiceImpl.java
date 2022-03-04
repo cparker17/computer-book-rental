@@ -123,21 +123,37 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public List<Book> getSearchResults(String searchText) {
-        List<Book> books = bookRepository.findAll();
+    public List<Book> getSearchResults(String searchText) throws NoSuchBookException {
         List<Book> searchResults = new ArrayList<>();
-        for (Book book : books) {
-            String bookInfo = book.getTitle().concat(book.getAuthor()).concat(book.getIsbn());
-            if (bookInfo.contains(searchText)) {
-                searchResults.add(book);
+        searchResults.addAll(bookRepository.findBooksByTitleContaining(searchText));
+        searchResults.addAll(bookRepository.findBooksByAuthorContaining(searchText));
+        searchResults.addAll(bookRepository.findBooksByIsbnContaining(searchText));
+
+        if (searchResults.isEmpty()) {
+            throw new NoSuchBookException("There aren't any books that match your search request.");
+        } else {
+            List<Book> duplicateBooks = new ArrayList<>();
+            for (int i = 0; i < searchResults.size() - 1; i++) {
+                for (int j = i + 1; j < searchResults.size() - 1; j++) {
+                    if (searchResults.get(i).equals(searchResults.get(j))) {
+                        duplicateBooks.add(searchResults.get(i));
+                    }
+                }
             }
+            searchResults.removeAll(duplicateBooks);
+
+            return searchResults;
         }
-        return searchResults;
     }
 
     @Override
     public List<BookHistory> getBookRentalHistory(Long id) {
         Book book = bookRepository.findById(id).get();
         return book.getBookHistoryList();
+    }
+
+    @Override
+    public Book getLatestArrival() {
+        return bookRepository.findTopByOrderByDateAddedDesc();
     }
 }

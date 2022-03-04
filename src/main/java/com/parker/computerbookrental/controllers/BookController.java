@@ -10,8 +10,10 @@ import com.parker.computerbookrental.services.UserService;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -51,7 +53,10 @@ public class BookController {
     }
 
     @RequestMapping("/save")
-    public String saveBook(Model model, @ModelAttribute("book") Book book) {
+    public String saveBook(Model model, @Valid @ModelAttribute("book") Book book, Errors errors) {
+        if (errors.hasErrors()) {
+            return "new-book";
+        }
         try {
             book.setDateAdded(LocalDate.now());
             bookService.saveBook(book);
